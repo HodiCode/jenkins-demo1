@@ -18,6 +18,7 @@ pipeline{
                 sh 'docker build -t ${IMAGE_NAME}:v${BUILD_NUMBER} .'
                 echo '============ verify docker image ==============' 
                 sh 'docker images | grep -i ${IMAGE_NAME} '
+                echo '======= application port ${params.APP-PORT}'
             }
 
         }
