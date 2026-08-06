@@ -7,7 +7,7 @@ pipeline{
         
     }
     parameters{
-        string(name:'APP-PORT', defaultValue:'5000')
+        string(name:'APP_PORT', defaultValue:'5000')
         choice(name:'env',choices:['dev','prd'])
     }
     stages{
@@ -18,7 +18,7 @@ pipeline{
                 sh 'docker build -t ${IMAGE_NAME}:v${BUILD_NUMBER} .'
                 echo '============ verify docker image ==============' 
                 sh 'docker images | grep -i ${IMAGE_NAME} '
-                echo "======= application port ${params.APP-PORT}"
+                echo "======= application port ${params.APP_PORT}"
             }
 
         }
