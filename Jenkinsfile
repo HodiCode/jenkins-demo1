@@ -17,7 +17,7 @@ pipeline{
             }
 
         }
-        stage('BUILD'){
+        stage('Test'){
             steps{
                 sh 'echo building docker image ${IMAGE_NAME}:v1.0.${BUILD_NUMBER}'
             }
