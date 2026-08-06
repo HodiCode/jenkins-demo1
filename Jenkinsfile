@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment {
         APP_NAME = "hello-app"
-        IMAGE_NAME= "hello-image:v1"
+        IMAGE_NAME= "hello-image"
         DOCKER_HUB_REPO= "hothaifaz11/hello-app"
         
     }
@@ -16,7 +16,7 @@ pipeline{
         }
         stage('BUILD'){
             steps{
-                sh 'echo building docker image ${IMAGE_NAME}'
+                sh 'echo building docker image ${IMAGE_NAME}:v1.0.${BUILD_NUMBER}'
             }
         }
         stage('stage C'){
