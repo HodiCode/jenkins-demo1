@@ -14,7 +14,7 @@ pipeline{
         stage('BUILD'){
             steps{
                 echo '============ building docker image =============='
-                echo ''========== ${IMAGE_NAME}:v${BUILD_NUMBER}'
+                echo '========== ${IMAGE_NAME}:v${BUILD_NUMBER}'
                 sh 'docker build -t ${IMAGE_NAME}:v${BUILD_NUMBER} .'
                 echo '============ verify docker image ==============' 
                 sh 'docker images | grep -i ${IMAGE_NAME} '
