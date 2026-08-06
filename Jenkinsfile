@@ -16,9 +16,18 @@ pipeline{
                 echo '============ building docker image =============='
                 echo '========== ${IMAGE_NAME}:v${BUILD_NUMBER}'
                 sh 'docker build -t ${IMAGE_NAME}:v${BUILD_NUMBER} .'
-                echo '============ verify docker image ==============' 
-                sh 'docker images | grep -i ${IMAGE_NAME} '
                 echo "======= application port ${params.APP_PORT}"
+            }
+            post{
+                success{
+                    echo 'docker built successfuly'
+                }
+                failure{
+                    echo 'woooooooops'
+                }
+                always{
+                    sh 'docker images | grep -i ${IMAGE_NAME} '
+                }
             }
 
         }
@@ -38,4 +47,15 @@ pipeline{
             }
         }
     }
+    post{
+                success{
+                    sh 'docker rmi ${IMAGE_NAME}:v${BUILD_NUMBER}'
+                }
+                failure{
+                    echo 'woooooooops'
+                }
+                always{
+                    cleanWs()
+                }
+            }
 }
