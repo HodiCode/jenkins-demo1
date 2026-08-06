@@ -7,10 +7,13 @@ pipeline{
         
     }
     stages{
-        stage('stage A'){
+        stage('BUILD'){
             steps{
-                sh 'echo stage 1'
-                sh "echo ${APP_NAME} is the app name"
+                echo '============ building docker image =============='
+                sh 'echo ========== ${IMAGE_NAME}:v${BUILD_NUMBER}'
+                sh 'docker build -t ${IMAGE_NAME}:v${BUILD_NUMBER} .'
+                echo '============ verify docker image ==============' 
+                sh 'docker images | grep -i ${IMAGE_NAME} '
             }
 
         }
