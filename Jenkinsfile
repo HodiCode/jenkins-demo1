@@ -6,11 +6,15 @@ pipeline{
         DOCKER_HUB_REPO= "hothaifaz11/hello-app"
         
     }
+    parameters{
+        string(name:'APP-PORT', defaultValue:'5000')
+        choice(name:'env',choices:['dev','prd'])
+    }
     stages{
         stage('BUILD'){
             steps{
                 echo '============ building docker image =============='
-                sh 'echo ========== ${IMAGE_NAME}:v${BUILD_NUMBER}'
+                echo ''========== ${IMAGE_NAME}:v${BUILD_NUMBER}'
                 sh 'docker build -t ${IMAGE_NAME}:v${BUILD_NUMBER} .'
                 echo '============ verify docker image ==============' 
                 sh 'docker images | grep -i ${IMAGE_NAME} '
