@@ -57,7 +57,8 @@ pipeline{
                         credentialsId:"docker-cred",
                         usernameVariable: "DOCKER_USER",
                         passwordVariable: "PAT"
-                    ){
+                )])
+                    {
                         sh'''
                         echo "${PAT}" | docker login \
                         -u "${DOCKER_USER}"\
@@ -68,7 +69,7 @@ pipeline{
                         docker logout
                         '''
                     }
-                ])
+                
             }
         }
 
