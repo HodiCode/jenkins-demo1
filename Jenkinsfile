@@ -1,4 +1,5 @@
 pipeline{
+    
     agent any
     stages{
         stage("check cred"){
@@ -34,6 +35,8 @@ pipeline{
             }
         }
         stage("TEST"){
+            environment{}
+            failFast true // 
             parallel{
                 stage("sanity test"){
                     steps{
