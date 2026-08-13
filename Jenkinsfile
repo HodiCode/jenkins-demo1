@@ -10,10 +10,10 @@ pipeline{
                         variable: 'TOKEN'
                     )
                 ]){
-                    # TOKENis valid
+                    //  TOKENis valid
                     sh 'echo "token: ${TOKEN}"'
                 }
-                # not a valid secret
+                //  not a valid secret
             }
         }
     }
