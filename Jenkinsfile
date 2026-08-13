@@ -21,6 +21,12 @@ pipeline{
                 sh "docker images | grep ${IMAGE_NAME}"
             }
         }
+        stage("start container")
+        {
+            steps{
+                sh "docker run --name ${CONTAINER_NAME} -d -p 5001:5000 ${FULL_IMAGE}"
+            }
+        }
         stage("test"){
             parallel{
                 stage("smoke test"){
@@ -41,5 +47,12 @@ pipeline{
             }
         }
 
+    }
+    post{
+        always{
+            sh 'docker rm -f ${CONTAINER_NAME}'
+            sh "docker rmi ${FULL_IMAGE}"
+            cleanWs()
+        }
     }
 }
