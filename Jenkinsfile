@@ -1,80 +1,45 @@
 pipeline{
-    
     agent any
-    stages{
-        stage("check cred"){
-            steps{
-                echo "======= printing cred ========"
-                withCredentials([
-                    string(
-                        credentialsId: 'demo-secret',
-                        variable: 'TOKEN'
-                    )
-                ]){
-                    //  TOKENis valid
-                    sh 'echo "token: ${TOKEN}"'
-                }
-                //  not a valid secret
-            }
-        }
-        stage("check username and password"){
-            steps{
-                echo "-------- printing the username and password cred --------"
-                withCredentials([
-                    usernamePassword(
-                        credentialsId:'user1',
-                        usernameVariable:'USER',
-                        passwordVariable:'PASS'
-                    )
-                ])
-                {
-                    sh 'echo "logging to docker using"'
-                    sh 'echo "docker login -u ${USER} -p ${PASS} hub.docker.com"'
-                    
-                }
-            }
-        }
-        stage("TEST"){
-            environment{}
-            failFast true // 
-            parallel{
-                stage("sanity test"){
-                    steps{
-                        echo '_____running tesst 123______'
-                    }
-                }
-                stage("integration test"){
-                    steps{
-                        echo '_____integration test ________'
-                        sh 'docker build ganisj'
-                    }
-                }
-                stage("regression test"){
-                    steps{
-                        echo "____ regression test ____"
-                    }
-                }
+    environment{
+        IMAGE_NAME= 'hello-app'
+        IMAGE_TAG= "${BUILD_NUMBER}"
+        FULL_IMAGE= "${IMAGE_NAME}:V${IMAGE_TAG}"
 
+        CONTAINER_NAME = "application"
+        
+    }
+    stages{
+        stage("docker build"){
+            steps{
+                echo "++++++++++++docker build ++++++++++++"
+                sh "docker build -t ${FULL_IMAGE}  applicaiton/ " 
             }
         }
-        stage("ping google"){
+        stage("docker verify"){
             steps{
-                echo 'pinging the google services'
-                retry(5){
-                    sh 'sleep 5'
-                    sh 'echo ping -c 5 8.8.8.8'
+                echo "++++++++++++docker image verify ++++++++++++"
+                sh "docker images | grep ${IMAGE_NAME}"
+            }
+        }
+        stage("test"){
+            parallel{
+                stage("smoke test"){
+                    steps{
+                         echo "++++++++++++docker image verify ++++++++++++"
+                    }
                 }
-            }
-        }
-        stage("curl google"){
-            steps{
-                echo 'curl the google services'
-                retry(3){
-                    timeout(time: 10, unit:'SECONDS'){
-                        sh 'sleep 15' 
+                stage("api test"){
+                    steps{
+                        echo "++++++++++++docker image verify ++++++++++++"
                     }
                 }
             }
         }
+        stage("deploy artifacts"){
+            steps{
+                echo "++++++++++++docker build ++++++++++++"
+            }
+        }
+
     }
 }
