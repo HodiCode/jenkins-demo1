@@ -33,8 +33,8 @@ pipeline{
                     steps{
                          echo "++++++++++++docker image verify ++++++++++++"
                          sh """
-                                chmod +x test/smoke.sh
-                                ./test/smoke.sh
+                                chmod +x tests/smoke.sh
+                                ./tests/smoke.sh
                          """    
                     }
                 }
