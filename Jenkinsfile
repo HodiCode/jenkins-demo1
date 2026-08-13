@@ -26,6 +26,7 @@ pipeline{
             steps{
                 sh "docker network create jenkins-net"
                 sh "docker network connect jenkins-net jenkins"
+                sh "docker network disconnect bridge jenkins"
                 sh "docker run --name ${CONTAINER_NAME} -d --net jenkins-net -p 5001:5000 ${FULL_IMAGE}"
             }
         }
@@ -60,6 +61,7 @@ pipeline{
             sh 'docker rm -f ${CONTAINER_NAME}'
             sh "docker rmi ${FULL_IMAGE}"
             sh 'docker network disconnect jenkins-net jenkins'
+            sh "docker network connect bridge jenkins"
             sh 'docker network rm jenkins-net '
             cleanWs()
         }
