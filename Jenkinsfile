@@ -45,8 +45,10 @@ pipeline{
         stage("curl google"){
             steps{
                 echo 'curl the google services'
-                timeout(time: 10, unit:'SECONDS'){
-                    sh 'sleep 15' 
+                retry(3){
+                    timeout(time: 10, unit:'SECONDS'){
+                        sh 'sleep 15' 
+                    }
                 }
             }
         }
