@@ -38,7 +38,15 @@ pipeline{
                 echo 'pinging the google services'
                 retry(5){
                     sh 'sleep 5'
-                    sh 'ping -c 5 8.8.8.8'
+                    sh 'echo ping -c 5 8.8.8.8'
+                }
+            }
+        }
+        stage("curl google"){
+            steps{
+                echo 'curl the google services'
+                timeout(time: 10, unit:'SECONDS'){
+                    sh 'sleep 15' 
                 }
             }
         }
