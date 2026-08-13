@@ -33,5 +33,13 @@ pipeline{
                 }
             }
         }
+        stage("ping google"){
+            steps{
+                echo 'pinging the google services'
+                retry(4){
+                    sh 'ping -c 5 8.8.8.8'
+                }
+            }
+        }
     }
 }
