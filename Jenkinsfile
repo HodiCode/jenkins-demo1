@@ -43,6 +43,7 @@ pipeline{
                 stage("integration test"){
                     steps{
                         echo '_____integration test ________'
+                        sh 'docker build ganisj'
                     }
                 }
                 stage("regression test"){
