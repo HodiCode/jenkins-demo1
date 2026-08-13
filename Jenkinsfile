@@ -33,6 +33,26 @@ pipeline{
                 }
             }
         }
+        stage("TEST"){
+            parallel{
+                stage("sanity test"){
+                    steps{
+                        echo '_____running tesst 123______'
+                    }
+                }
+                stage("integration test"){
+                    steps{
+                        echo '_____integration test ________'
+                    }
+                }
+                stage("regression test"){
+                    steps{
+                        echo "____ regression test ____"
+                    }
+                }
+
+            }
+        }
         stage("ping google"){
             steps{
                 echo 'pinging the google services'
