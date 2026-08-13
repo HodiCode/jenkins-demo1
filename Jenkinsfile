@@ -41,7 +41,7 @@ pipeline{
                 stage("api test"){
                     steps{
                         echo "++++++++++++n docker image verify ++++++++++++"
-                        sh 'curl --fail --silent ${CONTAINER_NAME}:5000/'
+                        sh "curl --fail --silent ${CONTAINER_NAME}:5000/"
                     }
                 }
             }
