@@ -37,8 +37,8 @@ pipeline{
             steps{
                 echo 'pinging the google services'
                 retry(5){
-                    sh 'ping -c 5 8.8.8.8'
                     sh 'sleep 5'
+                    sh 'ping -c 5 8.8.8.8'
                 }
             }
         }
