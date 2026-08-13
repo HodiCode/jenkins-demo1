@@ -36,8 +36,9 @@ pipeline{
         stage("ping google"){
             steps{
                 echo 'pinging the google services'
-                retry(10){
+                retry(5){
                     sh 'ping -c 5 8.8.8.8'
+                    sh 'sleep 5'
                 }
             }
         }
