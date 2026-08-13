@@ -54,8 +54,8 @@ pipeline{
                 echo "++++++++++++docker build ++++++++++++"
                 withCredentials([
                     usernamePassword(
-                        credentialsId:"docker-cred"
-                        usernameVariable: "DOCKER_USER"
+                        credentialsId:"docker-cred",
+                        usernameVariable: "DOCKER_USER",
                         passwordVariable: "PAT"
                     ){
                         sh'''
