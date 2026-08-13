@@ -32,11 +32,16 @@ pipeline{
                 stage("smoke test"){
                     steps{
                          echo "++++++++++++docker image verify ++++++++++++"
+                         sh """
+                                chmod +x test/smoke.sh
+                                ./test/smoke.sh
+                         """    
                     }
                 }
                 stage("api test"){
                     steps{
-                        echo "++++++++++++docker image verify ++++++++++++"
+                        echo "++++++++++++n docker image verify ++++++++++++"
+                        sh 'curl --fail --silent ${CONTAINER_NAME}:5000/'
                     }
                 }
             }
