@@ -3,10 +3,9 @@ pipeline{
     environment{
         IMAGE_NAME= 'hello-app'
         IMAGE_TAG= "${BUILD_NUMBER}"
-        FULL_IMAGE= "${IMAGE_NAME}:V${IMAGE_TAG}"
+        FULL_IMAGE= "hothaifaz11/${IMAGE_NAME}:V${IMAGE_TAG}"
 
         CONTAINER_NAME = "application"
-        
     }
     stages{
         stage("docker build"){
@@ -53,6 +52,23 @@ pipeline{
         stage("deploy artifacts"){
             steps{
                 echo "++++++++++++docker build ++++++++++++"
+                withCredentials([
+                    usernamePassword(
+                        credentialsId:"docker-cred"
+                        usernameVariable: "DOCKER_USER"
+                        passwordVariable: "PAT"
+                    ){
+                        sh'''
+                        echo "${PAT}" | docker login \
+                        -u "${DOCKER_USER}"\
+                        --password-stdin
+
+                        docker push "${FULL_IMAGE}"
+
+                        docker logout
+                        '''
+                    }
+                ])
             }
         }
 
