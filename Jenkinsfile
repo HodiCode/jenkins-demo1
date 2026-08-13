@@ -21,7 +21,7 @@ pipeline{
                 echo "-------- printing the username and password cred --------"
                 withCredentials([
                     usernamePassword(
-                        credentialId:'user1',
+                        credentialsId:'user1',
                         usernameVariable:'USER',
                         passwordVariable:'PASS'
                     )
